@@ -1,0 +1,39 @@
+FUNCTION "get_po_counts"( im_fdate DATE )
+ RETURNS TABLE (EMAIL NVARCHAR(255),
+	       CREATE_CNT INTEGER,
+	       CHANGE_CNT INTEGER,
+	       COMBINED_CNT INTEGER)
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+
+po_create_cnt =  SELECT COUNT(*) AS CREATE_CNT, "CREATEDBY" as EID
+     FROM "MYCAP_DB_TRANSACTION_PURCHASEORDER" WHERE ID IN (
+                     SELECT "PARENT_KEY_ID"
+                          FROM "MYCAP_DB_TRANSACTION_POITEMS"
+          WHERE "PRODUCT_GUID_NODE_KEY" IS NOT NULL)
+                 AND MONTH("CREATEDAT") = MONTH(:im_fdate)
+            GROUP BY  "CREATEDBY";
+
+po_change_cnt = SELECT COUNT(*) AS CHANGE_CNT, "MODIFIEDBY" as EID
+     FROM "MYCAP_DB_TRANSACTION_PURCHASEORDER"  WHERE ID IN (
+                     SELECT "PARENT_KEY_ID"
+                          FROM "MYCAP_DB_TRANSACTION_POITEMS"
+          WHERE "PRODUCT_GUID_NODE_KEY" IS NOT NULL)
+                AND MONTH("MODIFIEDAT") = MONTH(:im_fdate)
+             GROUP BY  "MODIFIEDBY";
+
+EMP_PO_COMBINED_CNT =
+        SELECT EMAIL, 
+         crcnt.CREATE_CNT, chcnt.CHANGE_CNT,  crcnt.CREATE_CNT +
+         chcnt.CHANGE_CNT AS COMBINED_CNT
+            FROM "MYCAP_DB_MASTER_EMPLOYEES" as emp
+            LEFT OUTER JOIN :PO_CREATE_CNT AS crcnt
+             ON emp.ID = crcnt.EID
+           LEFT OUTER JOIN :PO_CHANGE_CNT AS chcnt
+           ON emp.ID = chcnt.EID
+          ORDER BY COMBINED_CNT DESC;
+
+return select * from :emp_po_combined_cnt;
+
+END;

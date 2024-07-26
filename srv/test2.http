@@ -1,0 +1,134 @@
+
+GET http://localhost:4004/CatalogService/
+
+###Read Service metadata
+GET http://localhost:4004/CatalogService/$metadata
+
+###Read top 2 employee
+GET http://localhost:4004/CatalogService/EmployeeSet?$top=2
+
+
+###Read Purchase orders
+http://localhost:4004/CatalogService/POs?$top=2&$expand=Items,PARTNER_GUID
+
+###Create new Employee
+POST http://localhost:4004/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{ 
+            "nameFirst": "Anubhav",
+            "nameMiddle": null,
+            "nameLast": "Oberoy",
+            "nameInitials": null,
+            "sex": "M",
+            "language": "E",
+            "phoneNumber": "+91 8448454549",
+            "email": "anubhav.abap@gmail.com",
+            "loginName": "ANUBHAVO",
+            "accountNumber": "111222333",
+            "bankName": "HDFC bank"
+}
+
+###Read Single Employee Which was just created
+GET http://localhost:4004/CatalogService/EmployeeSet/aa34c5b2-8dfe-4bac-ac40-fecb59af61c9
+
+###Update the salary for the employee
+PATCH http://localhost:4004/CatalogService/EmployeeSet/aa34c5b2-8dfe-4bac-ac40-fecb59af61c9
+Content-Type: application/json;IEEE754Compatible=true
+
+{ 
+            "salaryAmount": "1000000.99",
+            "Currency_code": "INR"
+}
+
+###Read Single PO - Old syntax works as its not UUID type
+GET http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999
+
+###Create new PO
+POST http://localhost:4004/CatalogService/POs
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+	//"CURRENCY_CODE": "EUR",
+	"GROSS_AMOUNT": "3913.91",
+	"NET_AMOUNT": "3289",
+	"TAX_AMOUNT": "624.91",
+	//"NODE_KEY": "02BD2137-0890-1EEA-A6C2-BB55C1978999",
+	"PO_ID": "300000054",
+	"LIFECYCLE_STATUS": "N",
+	"OVERALL_STATUS": "P",
+	"PARTNER_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06885B04052"
+}
+
+###Read From Custom Handler
+GET http://localhost:4004/mysrvdemo/ReadEmoployeeSrv
+
+###Create Employee with custom handler
+POST http://localhost:4004/mysrvdemo/InsertEmployeeSrv
+Content-Type: application/json;IEEE754Compatible=true
+
+{           
+    "ID": "02BD2137-0890-1EEA-A6C2-BB55C1978969",
+    "nameFirst": "Messi",
+    "nameMiddle": null,
+    "nameLast": "Leone",
+    "nameInitials": null,
+    "sex": "M",
+    "language": "E",
+    "phoneNumber": "+91 8448454549",
+    "email": "anubhav.abap@gmail.com",
+    "loginName": "ANUBHAVO",
+    "accountNumber": "111222333",
+    "bankName": "HDFC bank"
+}
+
+###Update using Custom Handler
+PUT  http://localhost:4004/mysrvdemo/UpdateEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C1978969
+Content-Type: application/json;IEEE754Compatible=true
+
+{           
+    "ID": "02BD2137-0890-1EEA-A6C2-BB55C1978969",
+    "nameFirst": "Chrisopher",
+    "nameLast": "Columbus"
+}
+
+###DELETE The data using Custom Handler
+DELETE http://localhost:4004/mysrvdemo/DeleteEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C1978969
+
+
+###Calling action for the Entity
+GET http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999
+
+
+###Calling action for the Entity
+POST http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999/CatalogService.boost
+Content-Type: application/json
+
+
+###Read Largest Order in system
+GET http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999/CatalogService.largestOrder()
+
+###Read Largest Order in system
+GET http://localhost:4004/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC2C052
+
+###V2 Magic
+###Service End point by prefixing /v2
+GET http://localhost:4004/v2/CatalogService
+
+###Read Metadata
+GET http://localhost:4004/v2/CatalogService/$metadata
+
+###V2 Odata Employee
+GET http://localhost:4004/v2/CatalogService/EmployeeSet
+
+###Read Largest Order in system
+GET http://localhost:4004/v2/CatalogService/POs('74867AD200E41EDBA5D8B0C98DC2C052')
+
+###Custom Action
+POST http://localhost:4004/v2/CatalogService/POs_boost?NODE_KEY=74867AD200E41EDBA5D8B0C98DC2C052
+Content-Type: application/json
+
+{}
+
+###Calling Function using V2
+GET http://localhost:4004/v2/CatalogService/POs_largestOrder?ID=74867AD200E41EDBA5D8B0C98DC2C052

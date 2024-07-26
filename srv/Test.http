@@ -1,0 +1,37 @@
+GET http://localhost:4004/CatalogService/
+
+###Read Service Metadata
+GET http://localhost:4004/CatalogService/$metadata
+
+###Read top 3 employees
+GET http://localhost:4004/CatalogService/EmployeeSet?top=3
+
+###Create new Employee
+POST http://localhost:4004/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{ 
+            "nameFirst": "Jayaramu",
+            "nameMiddle": null,
+            "nameLast": "NH",
+            "nameInitials": null,
+            "sex": "M",
+            "language": "E",
+            "phoneNumber": "7353578452",
+            "email": "jayaramu@gmail.com",
+            "loginName": "ANUBHAVO",
+            "accountNumber": "111222333",
+            "bankName": "HDFC bank"
+}
+
+###Read Single Employee Which was just created
+GET http://localhost:4004/CatalogService/EmployeeSet/fc5f4a80-e3b9-4cb5-8cd8-952e7f4ed44f
+
+###Update the salary for the employee
+PATCH http://localhost:4004/CatalogService/EmployeeSet/fc5f4a80-e3b9-4cb5-8cd8-952e7f4ed44f
+Content-Type: application/json;IEEE754Compatible=true
+
+{ 
+            "salaryAmount": "1000000.99",
+            "Currency_code": "INR"
+}

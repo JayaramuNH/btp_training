@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_PURCHASEORDER" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="Purchase Order Calculation "/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="MYCAP_DB_TRANSACTION_PURCHASEORDER">
+    <resourceUri>MYCAP_DB_TRANSACTION_PURCHASEORDER</resourceUri>
+  </DataSource>
+  <DataSource id="MYCAP_DB_TRANSACTION_POITEMS">
+    <resourceUri>MYCAP_DB_TRANSACTION_POITEMS</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CURRENCY_CODE"/>
+      <viewAttribute id="GROSS_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="NET_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="PO_ID" aggregationType="sum"/>
+      <viewAttribute id="PARTNER_GUID_NODE_KEY"/>
+      <viewAttribute id="LIFECYCLE_STATUS"/>
+      <viewAttribute id="OVERALL_STATUS"/>
+      <viewAttribute id="NOTE"/>
+      <viewAttribute id="CREATEDBY"/>
+      <viewAttribute id="MODIFIEDBY"/>
+      <viewAttribute id="CREATEDAT"/>
+      <viewAttribute id="MODIFIEDAT"/>
+      <viewAttribute hidden="true" id="JOIN$ID$PARENT_KEY_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MYCAP_DB_TRANSACTION_PURCHASEORDER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY_CODE" source="CURRENCY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_AMOUNT" source="GROSS_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NET_AMOUNT" source="NET_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_AMOUNT" source="TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PO_ID" source="PO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID_NODE_KEY" source="PARTNER_GUID_NODE_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFECYCLE_STATUS" source="LIFECYCLE_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OVERALL_STATUS" source="OVERALL_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTE" source="NOTE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDBY" source="CREATEDBY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIEDBY" source="MODIFIEDBY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDAT" source="CREATEDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIEDAT" source="MODIFIEDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$PARENT_KEY_ID" source="ID"/>
+    </input>
+    <input node="MYCAP_DB_TRANSACTION_POITEMS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$PARENT_KEY_ID" source="PARENT_KEY_ID"/>
+    </input>
+    <joinAttribute name="JOIN$ID$PARENT_KEY_ID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CURRENCY_CODE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENCY_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="CURRENCY_CODE"/>
+    </attribute>
+    <attribute id="ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ID"/>
+    </attribute>
+    <attribute id="PO_ID" key="true" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PO_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PO_ID"/>
+    </attribute>
+    <attribute id="PARTNER_GUID_NODE_KEY" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_GUID_NODE_KEY"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTNER_GUID_NODE_KEY"/>
+    </attribute>
+    <attribute id="LIFECYCLE_STATUS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LIFECYCLE_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="LIFECYCLE_STATUS"/>
+    </attribute>
+    <attribute id="OVERALL_STATUS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OVERALL_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="OVERALL_STATUS"/>
+    </attribute>
+    <attribute id="NOTE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTE"/>
+      <keyMapping columnObjectName="Join_1" columnName="NOTE"/>
+    </attribute>
+    <attribute id="CREATEDBY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATEDBY"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDBY"/>
+    </attribute>
+    <attribute id="MODIFIEDBY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODIFIEDBY"/>
+      <keyMapping columnObjectName="Join_1" columnName="MODIFIEDBY"/>
+    </attribute>
+    <attribute id="CREATEDAT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATEDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDAT"/>
+    </attribute>
+    <attribute id="MODIFIEDAT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODIFIEDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MODIFIEDAT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GROSS_AMOUNT" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROSS_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="GROSS_AMOUNT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="NET_AMOUNT" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NET_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="NET_AMOUNT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="TAX_AMOUNT" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TAX_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="TAX_AMOUNT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="224"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="MYCAP_DB_TRANSACTION_PURCHASEORDER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="342.6953125"/>
+    </shape>
+    <shape modelObjectName="MYCAP_DB_TRANSACTION_POITEMS" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="407" y="24"/>
+      <rectangleSize width="286.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
