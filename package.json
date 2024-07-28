@@ -17,10 +17,12 @@
     "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^7",
     "@sap/eslint-plugin-cds": "^3",
+    "@sap/ux-specification": "^1.120.15",
     "eslint": "^9"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-purchaseorder": "cds watch --open purchaseorder/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "build": {
@@ -29,5 +31,8 @@
     "requires": {
       "db": "hana"
     }
-  }
+  },
+  "sapux": [
+    "app/purchaseorder"
+  ]
 }

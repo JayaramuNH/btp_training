@@ -21,12 +21,24 @@ service CatalogService @(path: '/CatalogService') {
     entity POs @(title: '{i18n>poHeader}')    as
         projection on transaction.purchaseorder {
             *,
+            case LIFECYCLE_STATUS
+            when 'N' then 'New'
+            when 'B' then 'Blocked'
+            when 'D' then 'Delivered'
+            end as LIFECYCLE_STATUS: String(20),
+        case LIFECYCLE_STATUS
+            when 'N' then 2
+            when 'B' then 1
+            when 'D' then 3
+            end as Criticality: Integer,
             Items : redirected to POItems
         }
         actions {
             function largestOrder() returns array of POs;
             action   boost();
         }
+
+        annotate POs with @odata.draft.enabled;
 
     entity POItems @(title: '{i18n>poItems}') as
         projection on transaction.poitems {
